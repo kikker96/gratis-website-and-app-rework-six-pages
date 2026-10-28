@@ -1,0 +1,189 @@
+[
+  {
+    "file": "index.html",
+    "title": "Gratis: open AI models that run locally in a browser tab",
+    "description": "Gratis runs GGUF models locally in a browser tab or desktop app. No install, no account, nothing leaves the device. Free, from TPN Labs.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Open Models, Running Locally in a Browser Tab"
+      },
+      {
+        "level": 2,
+        "text": "Runs in the browser already on this computer"
+      },
+      {
+        "level": 2,
+        "text": "Nothing leaves your device"
+      },
+      {
+        "level": 3,
+        "text": "Chats and images stay here"
+      },
+      {
+        "level": 3,
+        "text": "Works offline"
+      },
+      {
+        "level": 3,
+        "text": "One in-browser download, from Hugging Face"
+      },
+      {
+        "level": 3,
+        "text": "No account, no credit limits"
+      },
+      {
+        "level": 2,
+        "text": "From an open tab to the first reply"
+      },
+      {
+        "level": 2,
+        "text": "Room for models of real size, inside a browser tab"
+      },
+      {
+        "level": 2,
+        "text": "The model list shows the cost up front"
+      },
+      {
+        "level": 2,
+        "text": "Gratis is for using a model. "
+      },
+      {
+        "level": 3,
+        "text": "No local API"
+      },
+      {
+        "level": 3,
+        "text": "No web research yet"
+      },
+      {
+        "level": 2,
+        "text": "Questions"
+      },
+      {
+        "level": 2,
+        "text": "Run an open model on this device"
+      }
+    ],
+    "links_to": [
+      "app-chat.html",
+      "app-download.html",
+      "app-loading.html",
+      "app-pick.html",
+      "app.html",
+      "index.html"
+    ],
+    "sections": [
+      "how",
+      "models",
+      "faq"
+    ]
+  },
+  {
+    "file": "app.html",
+    "title": "Gratis",
+    "description": "Your own AI assistant that runs entirely on this device. Private, fast, and works offline.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Your own AI assistant that runs entirely on this device."
+      },
+      {
+        "level": 2,
+        "text": "Settings"
+      },
+      {
+        "level": 3,
+        "text": "Keyboard Shortcuts"
+      }
+    ],
+    "links_to": [
+      "app-pick.html",
+      "index.html"
+    ],
+    "sections": []
+  },
+  {
+    "file": "app-pick.html",
+    "title": "Pick a model in Gratis",
+    "description": "Gratis suggests a model that fits this device. Runs on this device; the download comes from Hugging Face.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Recommended starting model"
+      },
+      {
+        "level": 2,
+        "text": "Settings"
+      },
+      {
+        "level": 3,
+        "text": "Keyboard Shortcuts"
+      }
+    ],
+    "links_to": [
+      "app-download.html",
+      "index.html"
+    ],
+    "sections": [
+      "browse"
+    ]
+  },
+  {
+    "file": "app-download.html",
+    "title": "Downloading your model in Gratis",
+    "description": "A one-time download. After this, everything works offline.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Downloading your model"
+      }
+    ],
+    "links_to": [
+      "app-loading.html",
+      "app-pick.html",
+      "index.html"
+    ],
+    "sections": []
+  },
+  {
+    "file": "app-loading.html",
+    "title": "Getting your model ready in Gratis",
+    "description": "Loading the model into memory. This can take up to a minute.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Getting your model ready"
+      }
+    ],
+    "links_to": [
+      "app-chat.html",
+      "index.html"
+    ],
+    "sections": []
+  },
+  {
+    "file": "app-chat.html",
+    "title": "Chat in Gratis",
+    "description": "You are using a local model. Nobody can see what you do.",
+    "headings": [
+      {
+        "level": 1,
+        "text": "What can I help with?"
+      },
+      {
+        "level": 2,
+        "text": "Settings"
+      },
+      {
+        "level": 3,
+        "text": "Keyboard Shortcuts"
+      }
+    ],
+    "links_to": [
+      "app-pick.html",
+      "index.html"
+    ],
+    "sections": []
+  }
+]

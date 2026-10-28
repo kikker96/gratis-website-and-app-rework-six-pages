@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat in Gratis</title>
+<meta name="description" content="You are using a local model. Nobody can see what you do.">
+<meta property="og:title" content="Chat in Gratis">
+<meta property="og:description" content="You are using a local model. Nobody can see what you do.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="gratis-logo-con-bunny-6-10-07-cb6e.png">
+<link rel="icon" href="favicon-32-5615.png">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--sunk:#EFEEE8;--ink:#131517;--ink2:#4F545B;--line:#E3E2DC;--line2:#CFCEC7;--accent:#FF8A57;--accent-h:#FF7A40;--accent-d:#E2541C;--f:"Instrument Sans",system-ui,sans-serif;--m:"IBM Plex Mono",ui-monospace,monospace;--ease:cubic-bezier(0.32,0.72,0,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--f);overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+ul{list-style:none}
+button,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent-d);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:4px;z-index:80}
+.skip:focus{left:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--m);font-weight:500}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:4px;font-weight:600;border:1px solid var(--line2);background:var(--surface);cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.icon-btn{width:44px;height:44px;display:inline-grid;place-items:center;border-radius:4px;background:none;border:0;cursor:pointer;color:var(--ink2);flex:none}
+.icon-btn:hover{background:var(--sunk);color:var(--ink)}
+.chat{display:flex;height:100vh;height:100dvh}
+.side{width:264px;flex:none;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--line);position:fixed;inset:0 auto 0 0;z-index:40;transform:translateX(-100%);transition:transform .3s var(--ease);visibility:hidden}
+.side.open{transform:none;visibility:visible}
+.scrim{position:fixed;inset:0;background:rgba(19,21,23,.35);z-index:35}
+.side-head{display:flex;align-items:center;gap:8px;padding:12px}
+.newchat{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--line2);border-radius:4px;background:var(--surface);font-weight:600;cursor:pointer;flex:1}
+.newchat:hover{border-color:var(--ink)}
+.hist{flex:1;overflow:auto;padding:8px 12px}
+.hist a{display:flex;align-items:center;min-height:44px;padding:0 8px;border-radius:2px;text-decoration:none;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist a:hover{background:var(--sunk)}
+.hist a[aria-current=true]{background:var(--sunk);font-weight:600}
+.hist .empty-h{font-size:14px;color:var(--ink2);padding:8px}
+.side-foot{padding:12px;border-top:1px solid var(--line)}
+.wipe{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 8px;border:0;background:none;color:var(--ink2);cursor:pointer;border-radius:4px;font-size:14px;font-weight:500}
+.wipe:hover{color:var(--ink);background:var(--sunk)}
+.mainc{flex:1;min-width:0;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:4px;height:64px;padding:0 8px 0 4px;flex:none}
+.logo{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;flex:none}
+.logo img{height:28px;width:auto}
+.modelpick{position:relative;min-width:0}
+.mchip{display:inline-flex;align-items:center;gap:4px;min-height:44px;max-width:100%;padding:0 8px 0 12px;border:1px solid var(--line);border-radius:4px;background:var(--surface);font-weight:600;font-size:14px;cursor:pointer;min-width:0}
+.mchip:hover{border-color:var(--line2)}
+.mchip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.change{display:none;align-items:center;gap:6px;min-height:44px;padding:0 8px;color:var(--ink2);text-decoration:none;font-size:14px;font-weight:500;border-radius:4px;white-space:nowrap}
+.change:hover{color:var(--ink);background:var(--sunk)}
+.bar-r{margin-left:auto;display:flex;align-items:center;position:relative;flex:none}
+.menu{position:absolute;right:0;top:52px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px;width:208px;z-index:50;max-height:70vh;overflow:auto}
+.menu.left{left:0;right:auto;top:52px}
+.menu button,.menu a{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;padding:0 12px;min-height:44px;border:0;background:none;border-radius:2px;cursor:pointer;text-decoration:none}
+.menu button:hover,.menu a:hover{background:var(--sunk)}
+.menu button[aria-checked=true]{font-weight:600}
+.menu button[aria-checked=true]::after{content:"";width:8px;height:8px;background:var(--accent);border-radius:1px}
+.menu .cur{font-size:12px;color:var(--ink2);padding:8px 12px 4px}
+.thread{flex:1;overflow:auto;padding:16px}
+.inner{max-width:720px;margin:0 auto;width:100%;height:100%}
+.empty{min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px 0;animation:enter .5s var(--ease) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.empty h1{font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-0.02em}
+.empty p{margin-top:8px;color:var(--ink2);max-width:420px;text-wrap:pretty}
+.empty p svg{display:inline-block;vertical-align:-2px;margin-right:6px}
+.msgs{display:flex;flex-direction:column;gap:24px;padding:8px 0 24px}
+.msg{animation:enter .3s var(--ease) both}
+.msg.user{align-self:flex-end;max-width:85%;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:12px 16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot .who{font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:8px}
+.ph{border:1px dashed var(--line2);border-radius:4px;padding:16px;color:var(--ink2);font-size:14px}
+/* the sheet's cream ground is keyed out by #key: no box around the bunny */
+.sprite{position:relative;overflow:hidden;width:300px;height:200px;max-width:100%}
+.sprite img{position:absolute;top:-395px;left:0;width:1774px;height:887px;max-width:none;image-rendering:pixelated;image-rendering:crisp-edges;filter:url(#key);transform:translateX(-38px);animation:eat 2.6s step-end infinite}
+@keyframes eat{0%{transform:translateX(-38px)}24%{transform:translateX(-293px)}40%{transform:translateX(-603px)}52%{transform:translateX(-887px)}64%{transform:translateX(-1169px)}76%,100%{transform:translateX(-1452px)}}
+.thinking{font-size:14px;color:var(--ink2);margin-top:8px}
+.composer{flex:none;padding:8px 12px 16px}
+.box{max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--line2);border-radius:4px;padding:8px}
+.box:focus-within{border-color:var(--ink)}
+.box textarea{display:block;width:100%;border:0;resize:none;background:none;padding:8px;min-height:44px;max-height:200px;outline:none}
+.tools{display:flex;align-items:center;gap:4px}
+.faster{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:4px;font-size:14px;font-weight:500;color:var(--ink2);text-decoration:none;white-space:nowrap}
+.faster:hover{color:var(--ink);border-color:var(--line2)}
+.send{margin-left:auto;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:4px;background:var(--accent);color:var(--ink);cursor:pointer}
+.send:hover{background:var(--accent-h)}
+.send[disabled]{background:var(--sunk);color:#80858B;cursor:not-allowed}
+dialog{border:1px solid var(--line);border-radius:4px;padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:var(--surface);color:var(--ink);margin:auto}
+dialog[open]{display:flex;flex-direction:column}
+dialog::backdrop{background:rgba(19,21,23,.4)}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;padding:12px 12px 0 24px}
+.dlg-head h2{font-size:20px;font-weight:600}
+.tabs{display:flex;gap:4px;padding:8px 24px 0;border-bottom:1px solid var(--line)}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:0 8px;min-height:44px;cursor:pointer;color:var(--ink2);font-weight:500;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+.dlg-body{padding:24px;overflow:auto}
+.fl{font-weight:600;display:block}
+.help{font-size:14px;color:var(--ink2);margin-top:4px}
+.dlg-body textarea{width:100%;border:1px solid var(--line2);border-radius:4px;padding:12px;margin-top:12px;min-height:48px;resize:vertical}
+.set-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:24px 0;border-bottom:1px solid var(--line)}
+.switch{flex:none;width:52px;height:44px;border:0;background:none;position:relative;cursor:pointer}
+.switch::before{content:"";position:absolute;left:4px;top:8px;width:44px;height:28px;border-radius:14px;background:var(--line2);transition:background-color .2s}
+.switch::after{content:"";position:absolute;top:11px;left:7px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s var(--ease)}
+.switch[aria-checked=true]::before{background:var(--ink)}
+.switch[aria-checked=true]::after{transform:translateX(16px)}
+.keys-h{margin-top:24px}
+.keys div{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+kbd{font-family:var(--m);font-size:12px;border:1px solid var(--line2);border-radius:2px;padding:2px 8px;background:var(--sunk);color:var(--ink2)}
+.dlg-foot{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid var(--line);font-size:14px}
+.dlg-foot .ver{color:var(--ink2)}
+.dlg-foot .btn{margin-left:auto}
+@media (min-width:960px){
+ .side{position:static;transform:none;visibility:visible;transition:margin-left .3s var(--ease)}
+ .side.collapsed{margin-left:-264px;visibility:hidden}
+ .scrim{display:none}
+ .bar{padding:0 16px 0 8px}
+ .change{display:inline-flex}
+ .empty h1{font-size:36px}
+ .thread{padding:24px}
+ .composer{padding:8px 24px 24px}
+ .mainc.is-empty .thread{flex:0 0 auto;margin-top:auto;overflow:visible}
+ .mainc.is-empty .composer{margin-bottom:auto}
+ .mainc.is-empty .inner{height:auto}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.sprite img{transform:translateX(-38px)}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="key" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2126 0.7152 0.0722 0 0" result="l"/><feComponentTransfer in="l" result="b"><feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 1 1"/></feComponentTransfer><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 -1 0 0" result="w"/><feComponentTransfer in="w" result="w2"><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/></feComponentTransfer><feComposite in="b" in2="w2" operator="in" result="m"/><feComposite in="SourceGraphic" in2="m" operator="out"/></filter></svg>
+<a class="skip" href="#msg">Skip to message box</a>
+<div class="chat">
+ <aside class="side" id="side" aria-label="Chats">
+  <div class="side-head">
+   <button class="newchat" id="newChat"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>New Chat</button>
+   <button class="icon-btn" id="sideClose" aria-label="Toggle Sidebar" aria-controls="side"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/></svg></button>
+  </div>
+  <nav class="hist" aria-label="Chat history"><ul id="histList"><li><a href="#" aria-current="true">testing capabilities here</a></li></ul></nav>
+  <div class="side-foot"><button class="wipe" id="wipe"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"/></svg>Wipe history</button></div>
+ </aside>
+ <div class="scrim" id="scrim" hidden></div>
+ <div class="mainc is-empty" id="mainc">
+  <header class="bar">
+   <button class="icon-btn" id="sideOpen" aria-label="Toggle Sidebar" aria-controls="side" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/></svg></button>
+   <a class="logo" href="index.html"><img src="gratis-logo-con-bunny-6-10-07-cb6e.png" alt="Gratis home" width="87" height="28"></a>
+   <div class="modelpick">
+    <button class="mchip" id="mBtn" aria-haspopup="true" aria-expanded="false" aria-controls="mMenu"><span class="mName">MiniCPM5 1B</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></button>
+    <div class="menu left" id="mMenu" hidden><p class="cur">Model in use: <span class="mName">MiniCPM5 1B</span></p><a href="app-pick.html">Change model</a></div>
+   </div>
+   <a class="change" href="app-pick.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.31,88H208a8,8,0,0,0,0-16H67.31L85.66,53.66A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z"/></svg>Change model</a>
+   <div class="bar-r">
+    <button class="icon-btn" id="langBtn" aria-label="Change language" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm87.62,96H175.79C174,83.49,159.94,57.67,148.41,42.4A88.19,88.19,0,0,1,215.63,120ZM96.23,136h63.54c-2.31,41.61-22.23,67.11-31.77,77C118.45,203.1,98.54,177.6,96.23,136Zm0-16C98.54,78.39,118.46,52.89,128,43c9.55,9.93,29.46,35.43,31.77,77Zm11.36-77.6C96.06,57.67,82,83.49,80.21,120H40.37A88.19,88.19,0,0,1,107.59,42.4ZM40.37,136H80.21c1.82,36.51,15.85,62.33,27.38,77.6A88.19,88.19,0,0,1,40.37,136Zm108,77.6c11.53-15.27,25.56-41.09,27.38-77.6h39.84A88.19,88.19,0,0,1,148.41,213.6Z"/></svg></button>
+    <div class="menu" id="langMenu" role="menu" aria-label="Language" hidden>
+     <button role="menuitemradio" aria-checked="true" lang="en">English</button><button role="menuitemradio" aria-checked="false" lang="es">Español</button><button role="menuitemradio" aria-checked="false" lang="fr">Français</button><button role="menuitemradio" aria-checked="false" lang="de">Deutsch</button><button role="menuitemradio" aria-checked="false" lang="it">Italiano</button><button role="menuitemradio" aria-checked="false" lang="pt">Português</button><button role="menuitemradio" aria-checked="false" lang="nl">Nederlands</button><button role="menuitemradio" aria-checked="false" lang="pl">Polski</button><button role="menuitemradio" aria-checked="false" lang="ru">Русский</button><button role="menuitemradio" aria-checked="false" lang="ja">日本語</button><button role="menuitemradio" aria-checked="false" lang="zh">中文</button>
+    </div>
+    <button class="icon-btn" id="setBtn" aria-label="Open settings" aria-haspopup="dialog"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm109.94-52.79a8,8,0,0,0-3.89-5.4l-29.83-17-.12-33.62a8,8,0,0,0-2.83-6.08,111.91,111.91,0,0,0-36.72-20.67,8,8,0,0,0-6.46.59L128,41.85,97.88,25a8,8,0,0,0-6.47-.6A112.1,112.1,0,0,0,54.73,45.15a8,8,0,0,0-2.83,6.07l-.15,33.65-29.83,17a8,8,0,0,0-3.89,5.4,106.47,106.47,0,0,0,0,41.56,8,8,0,0,0,3.89,5.4l29.83,17,.12,33.62a8,8,0,0,0,2.83,6.08,111.91,111.91,0,0,0,36.72,20.67,8,8,0,0,0,6.46-.59L128,214.15,158.12,231a7.910,7.910,0,0,0,3.9,1,8.09,8.09,0,0,0,2.57-.42,112.1,112.1,0,0,0,36.68-20.73,8,8,0,0,0,2.83-6.07l.15-33.65,29.83-17a8,8,0,0,0,3.89-5.4A106.47,106.47,0,0,0,237.94,107.21Zm-15,34.91-28.57,16.25a8,8,0,0,0-3,3c-.58,1-1.19,2.06-1.81,3.06a7.94,7.94,0,0,0-1.22,4.21l-.15,32.25a95.89,95.89,0,0,1-25.37,14.3L134,199.13a8,8,0,0,0-3.91-1h-.19c-1.21,0-2.43,0-3.64,0a8.08,8.08,0,0,0-4.1,1l-28.84,16.1A96,96,0,0,1,67.88,201l-.11-32.2a8,8,0,0,0-1.22-4.22c-.62-1-1.23-2-1.8-3.06a8.09,8.09,0,0,0-3-3.06l-28.6-16.29a90.49,90.49,0,0,1,0-28.26L61.67,97.63a8,8,0,0,0,3-3c.58-1,1.19-2.06,1.81-3.06a7.94,7.94,0,0,0,1.22-4.21l.15-32.25a95.89,95.89,0,0,1,25.37-14.3L122,56.87a8,8,0,0,0,4.1,1c1.21,0,2.43,0,3.64,0a8.08,8.08,0,0,0,4.1-1l28.84-16.1A96,96,0,0,1,188.12,55l.11,32.2a8,8,0,0,0,1.22,4.22c.62,1,1.23,2,1.8,3.06a8.09,8.09,0,0,0,3,3.06l28.6,16.29A90.49,90.49,0,0,1,222.9,142.12Z"/></svg></button>
+   </div>
+  </header>
+  <main class="thread" id="thread">
+   <div class="inner" id="inner">
+    <div class="empty" id="empty">
+     <h1>What can I help with?</h1>
+     <p><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>You are using a local model. Nobody can see what you do.</p>
+    </div>
+    <div class="msgs" id="msgs" hidden aria-live="polite"></div>
+   </div>
+  </main>
+  <div class="composer">
+   <form class="box" id="form">
+    <label for="msg" class="sr">Message</label>
+    <textarea id="msg" rows="1"></textarea>
+    <div class="tools">
+     <button type="button" class="icon-btn" aria-label="Attach a photo or file"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M209.66,122.34a8,8,0,0,1,0,11.32l-82.05,82a56,56,0,0,1-79.2-79.21L147.67,35.73a40,40,0,1,1,56.61,56.55L105,193A24,24,0,1,1,71,159L154.3,74.38A8,8,0,1,1,165.7,85.6L82.39,170.31a8,8,0,1,0,11.27,11.36L192.93,81A24,24,0,1,0,159,47L59.76,147.68a40,40,0,1,0,56.53,56.62l82.06-82A8,8,0,0,1,209.66,122.34Z"/></svg></button>
+     <button type="button" class="icon-btn" aria-label="Voice input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,176a48.05,48.05,0,0,0,48-48V64a48,48,0,0,0-96,0v64A48.05,48.05,0,0,0,128,176ZM96,64a32,32,0,0,1,64,0v64a32,32,0,0,1-64,0Zm40,143.6V240a8,8,0,0,1-16,0V207.6A80.11,80.11,0,0,1,48,128a8,8,0,0,1,16,0,64,64,0,0,0,128,0,8,8,0,0,1,16,0A80.11,80.11,0,0,1,136,207.6Z"/></svg></button>
+     <a class="faster" href="app-pick.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M207.06,72.67A111.24,111.24,0,0,0,128,40h-.4C66.07,40.21,16,91,16,153.13V176a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V152A111.25,111.25,0,0,0,207.06,72.67ZM224,176H119.71l54.76-75.3a8,8,0,0,0-12.94-9.42L99.92,176H32V153.13c0-3.08.15-6.12.43-9.13H56a8,8,0,0,0,0-16H35.27c10.32-38.86,44-68.24,84.73-71.66V80a8,8,0,0,0,16,0V56.33A96.14,96.14,0,0,1,221,128H200a8,8,0,0,0,0,16h23.67c.21,2.65.33,5.31.33,8Z"/></svg>Faster</a>
+     <button type="submit" class="send" id="send" aria-label="Send message" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z"/></svg></button>
+    </div>
+   </form>
+  </div>
+ </div>
+</div>
+
+<dialog id="settings" aria-labelledby="setTitle">
+ <div class="dlg-head"><h2 id="setTitle">Settings</h2><button class="icon-btn" id="setClose" aria-label="Close settings"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button></div>
+ <div class="tabs" role="tablist" aria-label="Settings sections">
+  <button role="tab" id="tb-basic" aria-controls="tp-basic" aria-selected="true">Basic</button>
+  <button role="tab" id="tb-adv" aria-controls="tp-adv" aria-selected="false" tabindex="-1">Advanced</button>
+  <button role="tab" id="tb-models" aria-controls="tp-models" aria-selected="false" tabindex="-1">Models</button>
+ </div>
+ <div class="dlg-body">
+  <div role="tabpanel" id="tp-basic" aria-labelledby="tb-basic">
+   <label class="fl" for="ci">Custom Instructions</label>
+   <p class="help" id="ciHelp">Tell the AI how to behave. For example: "Always reply in French" or "Explain things simply".</p>
+   <textarea id="ci" rows="3" aria-describedby="ciHelp"></textarea>
+   <div class="set-row">
+    <div><span class="fl" id="stLbl">Speed tips in chat</span><p class="help" id="stHelp">Once per session, suggest a faster model when replies are slow, or a smarter one when they are very fast.</p></div>
+    <button class="switch" role="switch" aria-checked="true" aria-labelledby="stLbl" aria-describedby="stHelp"></button>
+   </div>
+   <h3 class="fl keys-h">Keyboard Shortcuts</h3>
+   <div class="keys">
+    <div><span>New Chat</span><kbd>[KEYS]</kbd></div>
+    <div><span>Toggle Sidebar</span><kbd>[KEYS]</kbd></div>
+    <div><span>Settings</span><kbd>[KEYS]</kbd></div>
+    <div><span>Stop Generation</span><kbd>[KEYS]</kbd></div>
+    <div><span>Close Modal</span><kbd>[KEYS]</kbd></div>
+   </div>
+  </div>
+  <div role="tabpanel" id="tp-adv" aria-labelledby="tb-adv" hidden><p class="ph">[ADVANCED SETTINGS]</p></div>
+  <div role="tabpanel" id="tp-models" aria-labelledby="tb-models" hidden><p class="ph">[MODELS SETTINGS]</p></div>
+ </div>
+ <div class="dlg-foot"><span class="ver">v0.49.0</span><span class="ver mono">e6c5677</span><button class="btn" type="button">Update app</button></div>
+</dialog>
+
+<script>
+(function(){
+ var MODELS={'qwen35-08b':'Qwen 3.5 0.8B','qwen35-4b':'Qwen 3.5 4B','qwen35-4b-heresy':'Qwen 3.5 4B Heresy','qwen35-9b':'Qwen 3.5 9B','qwen35-2b':'Qwen 3.5 2B','qwen35-9b-heretic':'Qwen 3.5 9B Heretic','minicpm5-1b':'MiniCPM5 1B','minicpm5-1b-q5':'MiniCPM5 1B','qwen3-17b-dec':'Qwen3 1.7B Decensored'};
+ var id=new URLSearchParams(location.search).get('model');if(!MODELS[id])id='minicpm5-1b';
+ document.querySelectorAll('.mName').forEach(function(e){e.textContent=MODELS[id]});
+ var wide=window.matchMedia('(min-width:960px)');
+ var side=document.getElementById('side'),scrim=document.getElementById('scrim'),so=document.getElementById('sideOpen');
+ function toggleSide(){
+  if(wide.matches){side.classList.toggle('collapsed');so.setAttribute('aria-expanded',String(!side.classList.contains('collapsed')))}
+  else{var o=!side.classList.contains('open');side.classList.toggle('open',o);scrim.hidden=!o;so.setAttribute('aria-expanded',String(o));if(o)document.getElementById('newChat').focus()}
+ }
+ so.addEventListener('click',toggleSide);
+ document.getElementById('sideClose').addEventListener('click',toggleSide);
+ scrim.addEventListener('click',toggleSide);
+ function menu(btn,m){
+  btn.addEventListener('click',function(e){e.stopPropagation();var o=m.hidden;closeMenus();m.hidden=!o;btn.setAttribute('aria-expanded',String(o))});
+ }
+ var lb=document.getElementById('langBtn'),lm=document.getElementById('langMenu'),mb=document.getElementById('mBtn'),mm=document.getElementById('mMenu');
+ function closeMenus(){lm.hidden=true;mm.hidden=true;lb.setAttribute('aria-expanded','false');mb.setAttribute('aria-expanded','false')}
+ menu(lb,lm);menu(mb,mm);
+ lm.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lm.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-checked',String(x===b))});closeMenus();lb.focus()});
+ document.addEventListener('click',function(e){if(!e.target.closest('.menu'))closeMenus()});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(!lm.hidden||!mm.hidden){closeMenus()}else if(side.classList.contains('open')){toggleSide();so.focus()}}});
+ var dlg=document.getElementById('settings');
+ document.getElementById('setBtn').addEventListener('click',function(){dlg.showModal()});
+ document.getElementById('setClose').addEventListener('click',function(){dlg.close()});
+ var ttabs=[].slice.call(dlg.querySelectorAll('[role=tab]'));
+ ttabs.forEach(function(t,k){t.addEventListener('click',function(){sel(k)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){sel((k+1)%3,true)}else if(e.key==='ArrowLeft'){sel((k+2)%3,true)}})});
+ function sel(k,f){ttabs.forEach(function(t,i){var on=i===k;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on});if(f)ttabs[k].focus()}
+ dlg.querySelectorAll('.switch').forEach(function(s){s.addEventListener('click',function(){s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'))})});
+ var hl=document.getElementById('histList');
+ document.getElementById('wipe').addEventListener('click',function(){hl.innerHTML='<li class="empty-h">No saved chats.</li>'});
+ var msgs=document.getElementById('msgs'),empty=document.getElementById('empty'),mainc=document.getElementById('mainc'),ta=document.getElementById('msg'),send=document.getElementById('send'),thread=document.getElementById('thread');
+ function reset(){msgs.innerHTML='';msgs.hidden=true;empty.hidden=false;mainc.classList.add('is-empty');ta.value='';send.disabled=true;ta.focus()}
+ document.getElementById('newChat').addEventListener('click',function(){reset();if(!wide.matches&&side.classList.contains('open'))toggleSide()});
+ function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,200)+'px';send.disabled=!ta.value.trim()}
+ ta.addEventListener('input',grow);
+ ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();if(ta.value.trim())document.getElementById('form').requestSubmit()}});
+ document.getElementById('form').addEventListener('submit',function(e){
+  e.preventDefault();var t=ta.value.trim();if(!t)return;
+  empty.hidden=true;msgs.hidden=false;mainc.classList.remove('is-empty');
+  var u=document.createElement('div');u.className='msg user';u.textContent=t;msgs.appendChild(u);
+  var b=document.createElement('div');b.className='msg bot';
+  b.innerHTML='<p class="who">'+MODELS[id]+'</p><div class="sprite" role="img" aria-label="Writing a reply: the Gratis bunny eating a carrot"><img src="bunny-eating-carrot-sprite-she-069f.png" alt="" width="1774" height="887"></div><p class="thinking">[THINKING STATE TEXT]</p>';
+  msgs.appendChild(b);ta.value='';grow();thread.scrollTop=thread.scrollHeight;
+  setTimeout(function(){b.innerHTML='<p class="who">'+MODELS[id]+'</p><p class="ph">[MODEL REPLY]</p>';thread.scrollTop=thread.scrollHeight},2600);
+ });
+})();
+</script>
+</body>
+</html>

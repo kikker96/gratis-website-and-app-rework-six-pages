@@ -1,0 +1,34 @@
+/* Design tokens from the brand and the site. */
+:root {
+  --color-near-black-canvas: #131517;  /* background */
+  --color-darkest-canvas: #0F1011;  /* background (inputs, darkest surfaces) */
+  --color-dark-surface: #16181B;  /* surface / cards */
+  --color-off-white: #F4F5F3;  /* text (primary on dark), logo fill */
+  --color-signal-orange: #FF8A57;  /* primary / accent (one per view) */
+  --color-deep-orange: #FF5A1F;  /* accent (strong state) */
+  --color-muted-gray: #9CA1A8;  /* secondary text / neutral */
+  --color-success-green: #5CC68A;  /* state accent (success) */
+  --color-warning-amber: #D4A76A;  /* state accent (warning) */
+  --color-error-coral: #F2766A;  /* state accent (error) */
+  --color-info-blue: #8AB4D4;  /* state accent (info) */
+  --color-written-on-the-page: #E7E9E6;  /*  */
+  --color-written-on-the-page: #FFC9B2;  /*  */
+  --font-headings: 'Space Grotesk';
+  --font-body: 'Instrument Sans';
+  --font-accent: 'IBM Plex Mono';
+  --font-body: 'instrument sans 500 latin';
+  --font-accent: 'ibm plex mono 500 latin';
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --sunk: #EFEEE8;
+  --ink: #131517;
+  --ink2: #4F545B;
+  --line: #E3E2DC;
+  --line2: #CFCEC7;
+  --accent: #FF8A57;
+  --accent-h: #FF7A40;
+  --accent-d: #E2541C;
+  --f: "Instrument Sans",system-ui,sans-serif;
+  --m: "IBM Plex Mono",ui-monospace,monospace;
+  --ease: cubic-bezier(0.32,0.72,0,1);
+}

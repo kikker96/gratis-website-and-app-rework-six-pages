@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downloading your model in Gratis</title>
+<meta name="description" content="A one-time download. After this, everything works offline.">
+<meta property="og:title" content="Downloading your model in Gratis">
+<meta property="og:description" content="A one-time download. After this, everything works offline.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="gratis-logo-con-bunny-6-10-07-cb6e.png">
+<link rel="icon" href="favicon-32-5615.png">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--sunk:#EFEEE8;--ink:#131517;--ink2:#4F545B;--line:#E3E2DC;--line2:#CFCEC7;--accent:#FF8A57;--accent-d:#E2541C;--f:"Instrument Sans",system-ui,sans-serif;--ease:cubic-bezier(0.32,0.72,0,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--f);overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent-d);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:4px;z-index:60}
+.skip:focus{left:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.icon-btn{width:44px;height:44px;display:inline-grid;place-items:center;border-radius:4px;background:none;border:0;cursor:pointer;color:var(--ink2)}
+.icon-btn:hover{background:var(--sunk);color:var(--ink)}
+.app{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 12px 0 16px}
+.logo{display:inline-flex;align-items:center;min-height:44px}
+.logo img{height:32px;width:auto}
+.bar-r{position:relative}
+.menu{position:absolute;right:0;top:52px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px;width:208px;z-index:30;max-height:70vh;overflow:auto}
+.menu button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:0 12px;min-height:44px;border:0;background:none;border-radius:2px;cursor:pointer}
+.menu button:hover{background:var(--sunk)}
+.menu button[aria-checked=true]{font-weight:600}
+.menu button[aria-checked=true]::after{content:"";width:8px;height:8px;background:var(--accent);border-radius:1px}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px 48px}
+.col{width:100%;max-width:440px;text-align:center;animation:enter .5s var(--ease) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-0.02em}
+.sub{margin-top:12px;color:var(--ink2);text-wrap:pretty}
+.pct{margin-top:32px;font-size:72px;line-height:1;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.pct span{font-size:30px;color:var(--ink2);margin-left:4px}
+/* running bunny: the sheet's cream ground is keyed out by #key, frames move by whole pixels */
+.burrows{position:relative;height:84px;margin-top:24px}
+.runner{position:absolute;left:0;bottom:0;width:100px;height:84px;overflow:hidden;will-change:transform;clip-path:inset(12px 0 0 0)}
+.runner img{position:absolute;left:-15px;top:-104px;width:800px;height:585px;max-width:none;image-rendering:pixelated;image-rendering:crisp-edges;filter:url(#key)}
+.track{height:8px;background:var(--sunk);border-radius:2px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:2px;transition:width .3s linear}
+.meta{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.cancel{display:inline-flex;align-items:center;gap:8px;margin-top:40px;min-height:44px;padding:0 16px;color:var(--ink2);text-decoration:none;font-weight:500;border-radius:4px}
+.cancel:hover{color:var(--ink);background:var(--sunk)}
+.foot{padding:16px}
+.install{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line2);border-radius:4px;background:var(--surface);text-decoration:none;font-weight:600;font-size:14px;color:var(--ink)}
+.install:hover{border-color:var(--ink)}
+@media (min-width:720px){.bar{padding:0 24px}h1{font-size:36px}.pct{font-size:120px}.pct span{font-size:48px}.foot{padding:24px}}
+@media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="key" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2126 0.7152 0.0722 0 0" result="l"></feColorMatrix><feComponentTransfer in="l" result="b"><feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 1 1"></feFuncA></feComponentTransfer><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 -1 0 0" result="w"></feColorMatrix><feComponentTransfer in="w" result="w2"><feFuncA type="discrete" tableValues="0 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"></feFuncA></feComponentTransfer><feComposite in="b" in2="w2" operator="in" result="m"></feComposite><feComposite in="SourceGraphic" in2="m" operator="out"></feComposite></filter></svg>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+ <header class="bar">
+  <a class="logo" href="index.html"><img src="gratis-logo-con-bunny-6-10-07-cb6e.png" alt="Gratis home" width="99" height="32"></a>
+  <div class="bar-r">
+   <button class="icon-btn" id="langBtn" aria-label="Change language" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm87.62,96H175.79C174,83.49,159.94,57.67,148.41,42.4A88.19,88.19,0,0,1,215.63,120ZM96.23,136h63.54c-2.31,41.61-22.23,67.11-31.77,77C118.45,203.1,98.54,177.6,96.23,136Zm0-16C98.54,78.39,118.46,52.89,128,43c9.55,9.93,29.46,35.43,31.77,77Zm11.36-77.6C96.06,57.67,82,83.49,80.21,120H40.37A88.19,88.19,0,0,1,107.59,42.4ZM40.37,136H80.21c1.82,36.51,15.85,62.33,27.38,77.6A88.19,88.19,0,0,1,40.37,136Zm108,77.6c11.53-15.27,25.56-41.09,27.38-77.6h39.84A88.19,88.19,0,0,1,148.41,213.6Z"></path></svg></button>
+   <div class="menu" id="langMenu" role="menu" aria-label="Language" hidden="">
+    <button role="menuitemradio" aria-checked="true" lang="en">English</button><button role="menuitemradio" aria-checked="false" lang="es">Español</button><button role="menuitemradio" aria-checked="false" lang="fr">Français</button><button role="menuitemradio" aria-checked="false" lang="de">Deutsch</button><button role="menuitemradio" aria-checked="false" lang="it">Italiano</button><button role="menuitemradio" aria-checked="false" lang="pt">Português</button><button role="menuitemradio" aria-checked="false" lang="nl">Nederlands</button><button role="menuitemradio" aria-checked="false" lang="pl">Polski</button><button role="menuitemradio" aria-checked="false" lang="ru">Русский</button><button role="menuitemradio" aria-checked="false" lang="ja">日本語</button><button role="menuitemradio" aria-checked="false" lang="zh">中文</button>
+   </div>
+  </div>
+ </header>
+ <main class="stage" id="main">
+  <div class="col">
+   <h1>Downloading your model</h1>
+   <p class="sub"><span class="mName">MiniCPM5 1B.</span>&nbsp;<div>This is a one time download.&nbsp;<div>After this, everything works offline.</div></div></p>
+   <p class="pct" aria-hidden="true"><b id="pct" style="font-weight:600">0</b><span>%</span></p>
+   <div class="burrows" id="burrows" role="img" aria-label="The Gratis bunny runs from one burrow to the next as the download moves forward">
+    <div class="runner" id="runner"><img src="pixel-bunny-burrow-animation-s-c847.jpg" alt="" width="800" height="585"></div>
+   </div>
+   <div class="track" role="progressbar" id="pb" aria-label="Download progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="fill" id="fill"></div></div>
+   <div class="meta"><span id="got">0 KB / 688 MB</span><span id="eta"></span></div>
+   <p class="sr" id="live" aria-live="polite"></p>
+   <a class="cancel" href="app-pick.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>Cancel download</a>
+  </div>
+ </main>
+ <footer class="foot">
+  <a class="install" href="https://gratis.trueperformancenetwork.com/get-app"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path></svg>Install app</a>
+ </footer>
+</div>
+<script>
+(function(){
+ var lb=document.getElementById('langBtn'),lm=document.getElementById('langMenu');
+ function closeL(f){lm.hidden=true;lb.setAttribute('aria-expanded','false');if(f)lb.focus()}
+ lb.addEventListener('click',function(){var o=lm.hidden;lm.hidden=!o;lb.setAttribute('aria-expanded',String(o))});
+ lm.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lm.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-checked',String(x===b))});closeL(true)});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lm.hidden)closeL(true)});
+ var MODELS={'qwen35-08b':['Qwen 3.5 0.8B',798],'qwen35-4b':['Qwen 3.5 4B',3500],'qwen35-4b-heresy':['Qwen 3.5 4B Heresy',3400],'qwen35-9b':['Qwen 3.5 9B',6700],'qwen35-2b':['Qwen 3.5 2B',2000],'qwen35-9b-heretic':['Qwen 3.5 9B Heretic',6500],'minicpm5-1b':['MiniCPM5 1B',688],'minicpm5-1b-q5':['MiniCPM5 1B',775],'qwen3-17b-dec':['Qwen3 1.7B Decensored',1100]};
+ var id=new URLSearchParams(location.search).get('model');if(!MODELS[id])id='minicpm5-1b';
+ var name=MODELS[id][0],mb=MODELS[id][1];
+ function fmt(v){return v>=1000?(v/1000).toFixed(1)+' GB':Math.round(v)+' MB'}
+ document.querySelectorAll('.mName').forEach(function(e){e.textContent=name});
+ var total=fmt(mb);document.getElementById('got').textContent='0 KB / '+total;
+
+ /* bunny frames: left/top of each frame on the burrow sheet as drawn (800 x 585) */
+ var FR={1:[15,104],2:[102,104],3:[195,104],4:[293,104],5:[402,104],6:[25,272],7:[122,272],8:[220,272],9:[327,272],10:[430,272],11:[530,272],12:[627,272],13:[35,446],14:[145,446],15:[255,446],16:[365,446],17:[480,446]};
+ var runner=document.getElementById('runner'),rimg=runner.querySelector('img'),lane=document.getElementById('burrows');
+ function frame(n){rimg.style.left=-FR[n][0]+'px';rimg.style.top=-FR[n][1]+'px';runner.style.clipPath=n<=5?'inset(12px 0 0 0)':'none'}
+ function at(x){runner.style.transform='translateX('+Math.round(x)+'px)'}
+ var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ frame(still?3:1);
+
+ var dur=9000,t0=performance.now(),last=-1,said=0,done=false,exitMs=550;
+ function tick(now){
+  var p=Math.min(1,(now-t0)/dur),pc=Math.floor(p*100);
+  var W=lane.clientWidth-100;
+  if(!still&&!done){
+   var since=now-t0;
+   if(since<exitMs){frame(1+Math.floor(since/110));at(0)}
+   else{frame(6+Math.floor(now/80)%7);at(p*W)}
+  }
+  if(pc!==last){last=pc;
+   document.getElementById('pct').textContent=pc;
+   document.getElementById('fill').style.width=pc+'%';
+   document.getElementById('pb').setAttribute('aria-valuenow',pc);
+   document.getElementById('got').textContent=(p===0?'0 KB':fmt(mb*p))+' / '+total;
+   var left=Math.ceil((1-p)*dur/1000);document.getElementById('eta').textContent=p<1?'About '+left+' s left':'';
+   if(pc>=said+25){said=pc-pc%25;document.getElementById('live').textContent=said+'% downloaded'}
+  }
+  if(p<1){requestAnimationFrame(tick);return}
+  done=true;
+  var go=function(){location.href='app-loading.html?model='+encodeURIComponent(id)};
+  if(still){setTimeout(go,500);return}
+  at(W);var f=13;frame(f);
+  var iv=setInterval(function(){f++;if(f>17){clearInterval(iv);setTimeout(go,250);return}frame(f)},110);
+ }
+ requestAnimationFrame(tick);
+})();
+</script>
+
+
+</body></html>

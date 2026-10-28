@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick a model in Gratis</title>
+<meta name="description" content="Gratis suggests a model that fits this device. Runs on this device; the download comes from Hugging Face.">
+<meta property="og:title" content="Pick a model in Gratis">
+<meta property="og:description" content="Gratis suggests a model that fits this device.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="gratis-logo-con-bunny-6-10-07-cb6e.png">
+<link rel="icon" href="favicon-32-5615.png">
+<style>
+:root{--bg:#F7F6F2;--surface:#FFFFFF;--sunk:#EFEEE8;--ink:#131517;--ink2:#4F545B;--line:#E3E2DC;--line2:#CFCEC7;--accent:#FF8A57;--accent-h:#FF7A40;--accent-d:#E2541C;--ok:#2F8F5B;--f:"Instrument Sans",system-ui,sans-serif;--m:"IBM Plex Mono",ui-monospace,monospace;--ease:cubic-bezier(0.32,0.72,0,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--f);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+ul{list-style:none}
+fieldset{border:0;min-width:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent-d);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:4px;z-index:60}
+.skip:focus{left:16px}
+.mono{font-family:var(--m);font-weight:500}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:4px;font-weight:600;font-size:16px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color .2s,border-color .2s}
+.btn-primary{background:var(--accent);color:var(--ink)}
+.btn-primary:hover{background:var(--accent-h)}
+.btn-quiet{background:var(--surface);border-color:var(--line2)}
+.btn-quiet:hover{border-color:var(--ink)}
+.btn-text{background:none;border:0;min-height:44px;padding:8px;color:var(--ink2);font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line2);text-align:center}
+.btn-text:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.btn-wide{width:100%}
+.btn-sm{min-height:44px;padding:0 16px}
+.icon-btn{width:44px;height:44px;display:inline-grid;place-items:center;border-radius:4px;background:none;border:0;cursor:pointer;color:var(--ink2)}
+.icon-btn:hover{background:var(--sunk);color:var(--ink)}
+.app{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 12px 0 16px;gap:8px}
+.logo{display:inline-flex;align-items:center;min-height:44px}
+.logo img{height:32px;width:auto}
+.bar-r{display:flex;align-items:center;gap:4px;position:relative}
+.menu{position:absolute;right:0;top:52px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px;width:208px;z-index:30;max-height:70vh;overflow:auto}
+.menu button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:0 12px;min-height:44px;border:0;background:none;border-radius:2px;cursor:pointer}
+.menu button:hover{background:var(--sunk)}
+.menu button[aria-checked=true]{font-weight:600}
+.menu button[aria-checked=true]::after{content:"";width:8px;height:8px;background:var(--accent);border-radius:1px}
+.stage{flex:1;display:flex;justify-content:center;padding:16px 16px 48px}
+.col{width:100%;max-width:560px;animation:enter .5s var(--ease) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.swap{animation:swap .3s var(--ease) both}
+@keyframes swap{from{opacity:.2}to{opacity:1}}
+.foot{padding:16px}
+.install{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line2);border-radius:4px;background:var(--surface);text-decoration:none;font-weight:600;font-size:14px}
+.install:hover{border-color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px 20px}
+h1{font-size:16px;font-weight:500;color:var(--ink2)}
+.mname{font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-0.02em;margin-top:4px}
+.fit{display:flex;gap:8px;align-items:center;margin-top:8px;color:var(--ink2);font-size:14px}
+.fit svg{color:var(--ok)}
+.big{display:flex;align-items:baseline;gap:8px;margin-top:24px}
+.big b{font-size:48px;line-height:1;font-weight:600;letter-spacing:-0.02em}
+.big span{color:var(--ink2)}
+.facts{margin-top:16px;border-top:1px solid var(--line)}
+.facts li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.facts .tps{color:var(--ink2)}
+.facts .cap{display:flex;gap:8px;align-items:center}
+.cmp{margin-top:16px;font-size:14px;color:var(--ink2);background:var(--sunk);border-radius:2px;padding:12px}
+.speed{margin-top:24px}
+.speed legend{font-size:14px;font-weight:600;margin-bottom:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--sunk);border-radius:4px;padding:4px}
+.seg button{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;border:0;border-radius:2px;background:none;cursor:pointer;font-weight:600;color:var(--ink2)}
+.seg button small{font-size:12px;font-weight:500}
+.seg button[aria-pressed=true]{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line2)}
+.prefs{margin-top:16px}
+.pref{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:52px;border-bottom:1px solid var(--line);font-size:14px}
+.pref:last-child{border-bottom:0}
+.switch{flex:none;width:52px;height:44px;border:0;background:none;position:relative;cursor:pointer}
+.switch::before{content:"";position:absolute;left:4px;top:8px;width:44px;height:28px;border-radius:14px;background:var(--line2);transition:background-color .2s}
+.switch::after{content:"";position:absolute;top:11px;left:7px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s var(--ease)}
+.switch[aria-checked=true]::before{background:var(--ink)}
+.switch[aria-checked=true]::after{transform:translateX(16px)}
+.go{margin-top:24px;display:grid;gap:4px;justify-items:center}
+.go .btn span{font-weight:500}
+.alt span{white-space:nowrap;margin-left:4px}
+.privacy{display:flex;gap:8px;align-items:flex-start;margin-top:16px;font-size:14px;color:var(--ink2);text-wrap:pretty}
+.privacy svg{margin-top:2px;flex:none}
+.browse-t{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;min-height:48px;background:none;border:1px solid var(--line2);border-radius:4px;font-weight:600;cursor:pointer}
+.browse-t:hover{border-color:var(--ink)}
+.browse-t svg{transition:transform .25s var(--ease)}
+.browse-t[aria-expanded=true] svg{transform:rotate(180deg)}
+.browse{margin-top:16px}
+.tools{display:grid;gap:12px}
+.lbl{font-size:14px;font-weight:600;display:block;margin-bottom:8px}
+select,input[type=text],textarea{width:100%;border:1px solid var(--line2);border-radius:4px;background:var(--surface);padding:0 12px;min-height:48px}
+textarea{padding:12px;margin-top:12px;resize:vertical}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--accent-d);outline-offset:0;border-color:transparent}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{min-height:44px;padding:0 12px;border:1px solid var(--line2);border-radius:4px;background:var(--surface);cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap}
+.filters button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.list{margin-top:16px;display:grid;gap:8px}
+.row{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:16px;cursor:pointer}
+.row:hover{border-color:var(--line2)}
+.row[aria-checked=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.row-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.row-name{font-weight:600}
+.tag{font-size:12px;font-weight:500;padding:2px 8px;border-radius:2px;background:var(--sunk);color:var(--ink2)}
+.row-meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-size:14px;color:var(--ink2)}
+.row-meta b{color:var(--ink);font-weight:600}
+.more{display:grid;gap:8px;margin-top:12px}
+.more .btn-text{justify-self:start}
+.ph{border:1px dashed var(--line2);border-radius:4px;padding:16px;color:var(--ink2);font-size:14px}
+.ram{margin-top:24px}
+.custom{margin-top:16px}
+.load{margin-top:24px}
+dialog{border:1px solid var(--line);border-radius:4px;padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:var(--surface);color:var(--ink);margin:auto}
+dialog::backdrop{background:rgba(19,21,23,.4)}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;padding:12px 12px 0 24px}
+.dlg-head h2{font-size:20px;font-weight:600}
+.tabs{display:flex;gap:4px;padding:8px 24px 0;border-bottom:1px solid var(--line)}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:0 8px;min-height:44px;cursor:pointer;color:var(--ink2);font-weight:500;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink)}
+.dlg-body{padding:24px;overflow:auto}
+.fl{font-weight:600;display:block}
+.help{font-size:14px;color:var(--ink2);margin-top:4px}
+.set-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:24px 0;border-bottom:1px solid var(--line)}
+.keys-h{margin-top:24px}
+.keys div{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+kbd{font-family:var(--m);font-size:12px;border:1px solid var(--line2);border-radius:2px;padding:2px 8px;background:var(--sunk);color:var(--ink2)}
+.dlg-foot{display:flex;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid var(--line);font-size:14px}
+.dlg-foot .ver{color:var(--ink2)}
+.dlg-foot .btn{margin-left:auto}
+@media (min-width:720px){.bar{padding:0 24px}.stage{padding:24px 24px 64px}.card{padding:32px}.mname{font-size:36px}.foot{padding:24px}.tools{grid-template-columns:1fr 200px;align-items:end}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+ <header class="bar">
+  <a class="logo" href="index.html"><img src="gratis-logo-con-bunny-6-10-07-cb6e.png" alt="Gratis home" width="99" height="32"></a>
+  <div class="bar-r">
+   <button class="icon-btn" id="langBtn" aria-label="Change language" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm87.62,96H175.79C174,83.49,159.94,57.67,148.41,42.4A88.19,88.19,0,0,1,215.63,120ZM96.23,136h63.54c-2.31,41.61-22.23,67.11-31.77,77C118.45,203.1,98.54,177.6,96.23,136Zm0-16C98.54,78.39,118.46,52.89,128,43c9.55,9.93,29.46,35.43,31.77,77Zm11.36-77.6C96.06,57.67,82,83.49,80.21,120H40.37A88.19,88.19,0,0,1,107.59,42.4ZM40.37,136H80.21c1.82,36.51,15.85,62.33,27.38,77.6A88.19,88.19,0,0,1,40.37,136Zm108,77.6c11.53-15.27,25.56-41.09,27.38-77.6h39.84A88.19,88.19,0,0,1,148.41,213.6Z"></path></svg></button>
+   <div class="menu" id="langMenu" role="menu" aria-label="Language" hidden="">
+    <button role="menuitemradio" aria-checked="true" lang="en">English</button><button role="menuitemradio" aria-checked="false" lang="es">Español</button><button role="menuitemradio" aria-checked="false" lang="fr">Français</button><button role="menuitemradio" aria-checked="false" lang="de">Deutsch</button><button role="menuitemradio" aria-checked="false" lang="it">Italiano</button><button role="menuitemradio" aria-checked="false" lang="pt">Português</button><button role="menuitemradio" aria-checked="false" lang="nl">Nederlands</button><button role="menuitemradio" aria-checked="false" lang="pl">Polski</button><button role="menuitemradio" aria-checked="false" lang="ru">Русский</button><button role="menuitemradio" aria-checked="false" lang="ja">日本語</button><button role="menuitemradio" aria-checked="false" lang="zh">中文</button>
+   </div>
+   <button class="icon-btn" id="setBtn" aria-label="Open settings" aria-haspopup="dialog"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm109.94-52.79a8,8,0,0,0-3.89-5.4l-29.83-17-.12-33.62a8,8,0,0,0-2.83-6.08,111.91,111.91,0,0,0-36.72-20.67,8,8,0,0,0-6.46.59L128,41.85,97.88,25a8,8,0,0,0-6.47-.6A112.1,112.1,0,0,0,54.73,45.15a8,8,0,0,0-2.83,6.07l-.15,33.65-29.83,17a8,8,0,0,0-3.89,5.4,106.47,106.47,0,0,0,0,41.56,8,8,0,0,0,3.89,5.4l29.83,17,.12,33.62a8,8,0,0,0,2.83,6.08,111.91,111.91,0,0,0,36.72,20.67,8,8,0,0,0,6.46-.59L128,214.15,158.12,231a7.91,7.91,0,0,0,3.9,1,8.09,8.09,0,0,0,2.57-.42,112.1,112.1,0,0,0,36.68-20.73,8,8,0,0,0,2.83-6.07l.15-33.65,29.83-17a8,8,0,0,0,3.89-5.4A106.47,106.47,0,0,0,237.94,107.21Zm-15,34.91-28.57,16.25a8,8,0,0,0-3,3c-.58,1-1.19,2.06-1.81,3.06a7.94,7.94,0,0,0-1.22,4.21l-.15,32.25a95.89,95.89,0,0,1-25.37,14.3L134,199.13a8,8,0,0,0-3.91-1h-.19c-1.21,0-2.43,0-3.64,0a8.08,8.08,0,0,0-4.1,1l-28.84,16.1A96,96,0,0,1,67.88,201l-.11-32.2a8,8,0,0,0-1.22-4.22c-.62-1-1.23-2-1.8-3.06a8.09,8.09,0,0,0-3-3.06l-28.6-16.29a90.49,90.49,0,0,1,0-28.26L61.67,97.63a8,8,0,0,0,3-3c.58-1,1.19-2.06,1.81-3.06a7.94,7.94,0,0,0,1.22-4.21l.15-32.25a95.89,95.89,0,0,1,25.37-14.3L122,56.87a8,8,0,0,0,4.1,1c1.21,0,2.43,0,3.64,0a8.08,8.08,0,0,0,4.1-1l28.84-16.1A96,96,0,0,1,188.12,55l.11,32.2a8,8,0,0,0,1.22,4.22c.62,1,1.23,2,1.8,3.06a8.09,8.09,0,0,0,3,3.06l28.6,16.29A90.49,90.49,0,0,1,222.9,142.12Z"></path></svg></button>
+  </div>
+ </header>
+ <main class="stage" id="main">
+  <div class="col">
+   <section class="card" aria-labelledby="ph">
+    <h1 id="ph">Recommended starting model</h1>
+    <div id="cardBody" aria-live="polite">
+     <p class="mname" id="mName">Qwen 3.5 4B</p>
+     <p class="fit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>Fits your 16 GB computer with room to spare</p>
+     <p class="big"><b id="mSize">3.5 GB</b><span>download</span></p>
+     <ul class="facts">
+      <li><span id="mSpeed">Slow replies. Be patient</span><span class="mono tps" id="mTps">~1.9 tok/s</span></li>
+      <li><span class="cap"><svg id="capIco" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"></path></svg><span id="mCap">Understands photos and screenshots</span></span></li>
+     </ul>
+     <p class="cmp" id="mCmp" hidden="">Compared to the default: 2.7 GB less to download, faster replies, simpler answers</p>
+    </div>
+    <fieldset class="speed">
+     <legend>Reply speed</legend>
+     <div class="seg">
+      <button type="button" aria-pressed="true" data-mode="smart" aria-label="Smarter, slow">Smarter<small>Slow</small></button>
+      <button type="button" aria-pressed="false" data-mode="fast" aria-label="Faster, fast">Faster<small>Fast</small></button>
+     </div>
+    </fieldset>
+    <div class="prefs">
+     <div class="pref"><span id="pp">Understand photos and screenshots</span><button class="switch" role="switch" aria-checked="false" aria-labelledby="pp"></button></div>
+     <div class="pref"><span id="pu">Uncensored</span><button class="switch" role="switch" aria-checked="false" aria-labelledby="pu"></button></div>
+    </div>
+    <div class="go">
+     <a class="btn btn-primary btn-wide" id="dlBtn" href="app-download.html?model=qwen35-4b">Download <span id="dlSize">3.5 GB</span></a>
+     <button type="button" class="btn-text alt" id="altBtn"></button>
+    </div>
+    <p class="privacy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"></path></svg>Runs on this device. Your chats and images stay here; the download comes from Hugging Face.</p>
+   </section>
+   <button type="button" class="browse-t" id="browseBtn" aria-expanded="false" aria-controls="browse">Browse all models<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></button>
+   <section class="browse" id="browse" hidden="" aria-label="All models">
+    <div class="tools">
+     <div><span class="lbl" id="fl-l">Show models for</span><div class="filters" role="group" aria-labelledby="fl-l">
+      <button type="button" aria-pressed="false" data-f="photos">Photos</button><button type="button" aria-pressed="false" data-f="uncensored">Uncensored</button><button type="button" aria-pressed="false" data-f="reasoning">Reasoning</button><button type="button" aria-pressed="false" data-f="multilingual">Multilingual</button><button type="button" aria-pressed="false" data-f="long">Long documents</button>
+     </div></div>
+     <div><label class="lbl" for="sort">Sort</label><select id="sort"><option value="recommended">Recommended</option><option value="fastest">Fastest</option><option value="smartest">Smartest</option><option value="smallest">Smallest</option></select></div>
+    </div>
+    <div class="list" id="list" role="radiogroup" aria-label="Models that run on this device"></div>
+    <div class="more">
+     <button type="button" class="btn-text" id="wontBtn" aria-expanded="false" aria-controls="wont">Show 3 that won't run here</button>
+     <p class="ph" id="wont" hidden="">[MODELS THAT WON'T RUN HERE: names, sizes and the reason for each, from the live app]</p>
+     <button type="button" class="btn-text" id="oldBtn" aria-expanded="false" aria-controls="old">Show older models (55)</button>
+     <p class="ph" id="old" hidden="">[OLDER MODELS (55): list from the live app]</p>
+    </div>
+    <div class="ram"><label class="lbl" for="ram">Browsers may hide or limit RAM information. Tell Gratis how much RAM your device really has to load larger models.</label><select id="ram"><option>My device has more RAM…</option><option>16 GB RAM</option><option>24 GB RAM</option><option>32 GB RAM</option><option>64 GB RAM</option></select></div>
+    <div class="custom"><label class="lbl" for="hf">Custom HuggingFace model</label><input type="text" id="hf" autocomplete="off" spellcheck="false"></div>
+    <a class="btn btn-primary btn-wide load" id="loadBtn" role="button" aria-disabled="true" tabindex="-1" style="opacity:.55;pointer-events:none">Load</a>
+   </section>
+  </div>
+ </main>
+ <footer class="foot">
+  <a class="install" href="https://gratis.trueperformancenetwork.com/get-app"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"></path></svg>Install app</a>
+ </footer>
+</div>
+<dialog id="settings" aria-labelledby="set-h">
+ <div class="dlg-head"><h2 id="set-h">Settings</h2><button class="icon-btn" data-close="" aria-label="Close settings"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button></div>
+ <div class="tabs" role="tablist" aria-label="Settings sections">
+  <button role="tab" id="t-basic" aria-controls="p-basic" aria-selected="true">Basic</button>
+  <button role="tab" id="t-adv" aria-controls="p-adv" aria-selected="false" tabindex="-1">Advanced</button>
+  <button role="tab" id="t-mod" aria-controls="p-mod" aria-selected="false" tabindex="-1">Models</button>
+ </div>
+ <div class="dlg-body">
+  <div role="tabpanel" id="p-basic" aria-labelledby="t-basic">
+   <label class="fl" for="ci">Custom Instructions</label>
+   <p class="help" id="ci-h">Tell the AI how to behave. For example: "Always reply in French" or "Explain things simply".</p>
+   <textarea id="ci" rows="3" aria-describedby="ci-h"></textarea>
+   <div class="set-row"><div><p class="fl" id="st-l">Speed tips in chat</p><p class="help">Once per session, suggest a faster model when replies are slow, or a smarter one when they are very fast.</p></div><button class="switch" role="switch" aria-checked="true" aria-labelledby="st-l"></button></div>
+   <h3 class="fl keys-h">Keyboard Shortcuts</h3>
+   <dl class="keys">
+    <div><dt>New Chat</dt><dd><kbd>[KEYS]</kbd></dd></div>
+    <div><dt>Toggle Sidebar</dt><dd><kbd>[KEYS]</kbd></dd></div>
+    <div><dt>Settings</dt><dd><kbd>[KEYS]</kbd></dd></div>
+    <div><dt>Stop Generation</dt><dd><kbd>[KEYS]</kbd></dd></div>
+    <div><dt>Close Modal</dt><dd><kbd>[KEYS]</kbd></dd></div>
+   </dl>
+  </div>
+  <div role="tabpanel" id="p-adv" aria-labelledby="t-adv" hidden=""><p class="ph">[ADVANCED SETTINGS: copy and controls from the live app]</p></div>
+  <div role="tabpanel" id="p-mod" aria-labelledby="t-mod" hidden=""><p class="ph">[MODELS SETTINGS: copy and controls from the live app]</p></div>
+ </div>
+ <div class="dlg-foot"><span class="mono">v0.49.0</span><span class="mono ver">e6c5677</span><button class="btn btn-quiet btn-sm">Update app</button></div>
+</dialog>
+<script>
+(function(){
+ var $=function(id){return document.getElementById(id)};
+ var lb=$('langBtn'),lm=$('langMenu');
+ function closeL(f){lm.hidden=true;lb.setAttribute('aria-expanded','false');if(f)lb.focus()}
+ lb.addEventListener('click',function(){var o=lm.hidden;lm.hidden=!o;lb.setAttribute('aria-expanded',String(o))});
+ lm.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lm.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-checked',String(x===b))});closeL(true)});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lm.hidden)closeL(true)});
+ var dlg=$('settings');
+ $('setBtn').addEventListener('click',function(){dlg.showModal()});
+ dlg.querySelector('[data-close]').addEventListener('click',function(){dlg.close()});
+ var tabs=[].slice.call(dlg.querySelectorAll('[role=tab]'));
+ tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){var s=x===t;x.setAttribute('aria-selected',String(s));x.tabIndex=s?0:-1;$(x.getAttribute('aria-controls')).hidden=!s})})});
+ document.querySelectorAll('[role=switch]').forEach(function(s){s.addEventListener('click',function(){s.setAttribute('aria-checked',String(s.getAttribute('aria-checked')!=='true'))})});
+ var SLOW='Slow replies — be patient',STEADY='Steady replies',QUICK='Quick replies';
+ var M=[
+  {id:'qwen35-08b',n:'Qwen 3.5 0.8B',t:['Photos'],q:'Q5_K_M',d:'798 MB',mb:798,mem:'1.4 GB',s:QUICK,tps:7.4,ml:1,lg:1},
+  {id:'qwen35-4b',n:'Qwen 3.5 4B',t:['Photos'],q:'Q4_K_M',d:'3.5 GB',mb:3500,mem:'4.2 GB',s:SLOW,tps:1.9,ml:1,lg:1},
+  {id:'qwen35-4b-heresy',n:'Qwen 3.5 4B Heresy',t:['Photos','Uncensored'],q:'Q4_K_M',d:'3.4 GB',mb:3400,mem:'4.1 GB',s:SLOW,tps:2.0,ml:1,lg:1},
+  {id:'qwen35-9b',n:'Qwen 3.5 9B',t:['Photos'],q:'Q4_K_M',d:'6.7 GB',mb:6700,mem:'7.5 GB',s:SLOW,tps:1.0,ml:1,lg:1},
+  {id:'qwen35-2b',n:'Qwen 3.5 2B',t:['Photos'],q:'Q4_K_M',d:'2.0 GB',mb:2000,mem:'2.7 GB',s:STEADY,tps:3.8,ml:1,lg:1},
+  {id:'qwen35-9b-heretic',n:'Qwen 3.5 9B Heretic',t:['Photos','Uncensored'],q:'Q4_K_M',d:'6.5 GB',mb:6500,mem:'7.3 GB',s:SLOW,tps:1.0,ml:1,lg:1},
+  {id:'minicpm5-1b',n:'MiniCPM5 1B',t:[],q:'Q4_K_M',d:'688 MB',mb:688,mem:'1.2 GB',s:QUICK,tps:6.4,ml:0,lg:1},
+  {id:'minicpm5-1b-q5',n:'MiniCPM5 1B',t:[],q:'Q5_0+',d:'775 MB',mb:775,mem:'1.3 GB',s:STEADY,tps:2.6,ml:0,lg:1},
+  {id:'qwen3-17b-dec',n:'Qwen3 1.7B Decensored',t:['Uncensored'],q:'Q4_K_M',d:'1.1 GB',mb:1100,mem:'1.8 GB',s:STEADY,tps:3.8,ml:1,lg:0}
+ ];
+ function byId(id){for(var i=0;i<M.length;i++)if(M[i].id===id)return M[i]}
+ var mode='smart',choice=null,filt=null,picked=null;
+ function render(){
+  var m=choice?byId(choice):byId(mode==='fast'?'qwen35-08b':'qwen35-4b');
+  $('ph').textContent=choice?'Your choice':'Recommended starting model';
+  $('mName').textContent=m.n;$('mSize').textContent=m.d;$('dlSize').textContent=m.d;
+  $('mSpeed').textContent=m.s;$('mTps').textContent='~'+m.tps.toFixed(1)+' tok/s';
+  var ph=m.t.indexOf('Photos')>-1;$('mCap').textContent=ph?'Understands photos and screenshots':'Reads text only';$('capIco').style.display=ph?'':'none';
+  $('mCmp').hidden=!(mode==='fast'&&!choice);
+  $('dlBtn').href='app-download.html?model='+m.id;
+  var a=$('altBtn');
+  if(choice){a.innerHTML='Back to the recommendation';a.dataset.act='back'}
+  else if(mode==='fast'){a.innerHTML='Want smarter answers? Qwen 3.5 4B also fits, but replies slower (~1.9 tok/s) <span>3.5 GB</span>';a.dataset.act='qwen35-4b'}
+  else{a.innerHTML='Trouble loading? Try a smaller model: MiniCPM5 1B <span>688 MB</span>';a.dataset.act='minicpm5-1b'}
+  var b=$('cardBody');b.classList.remove('swap');void b.offsetWidth;b.classList.add('swap');
+  renderList();
+ }
+ document.querySelectorAll('.seg button').forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.mode;choice=null;document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});render()})});
+ $('altBtn').addEventListener('click',function(){var a=this.dataset.act;choice=a==='back'?null:a;render()});
+ $('browseBtn').addEventListener('click',function(){var o=$('browse').hidden;$('browse').hidden=!o;this.setAttribute('aria-expanded',String(o))});
+ function tog(btn,el,on,off){btn.addEventListener('click',function(){var o=el.hidden;el.hidden=!o;btn.setAttribute('aria-expanded',String(o));if(on)btn.textContent=o?on:off})}
+ tog($('wontBtn'),$('wont'));tog($('oldBtn'),$('old'),'Hide older models','Show older models (55)');
+ document.querySelectorAll('.filters button').forEach(function(b){b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';document.querySelectorAll('.filters button').forEach(function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed',String(on));filt=on?b.dataset.f:null;renderList()})});
+ $('sort').addEventListener('change',renderList);
+ function pass(m){if(!filt||filt==='reasoning')return true;if(filt==='photos')return m.t.indexOf('Photos')>-1;if(filt==='uncensored')return m.t.indexOf('Uncensored')>-1;if(filt==='multilingual')return!!m.ml;if(filt==='long')return!!m.lg;return true}
+ function renderList(){
+  var s=$('sort').value,arr=M.filter(pass).slice();
+  if(s==='fastest')arr.sort(function(a,b){return b.tps-a.tps});
+  if(s==='smallest')arr.sort(function(a,b){return a.mb-b.mb});
+  if(s==='smartest')arr.sort(function(a,b){return b.mb-a.mb});
+  var cur=picked||(choice?choice:(mode==='fast'?'qwen35-08b':'qwen35-4b'));
+  $('list').innerHTML=arr.map(function(m){return '<button type="button" class="row" role="radio" aria-checked="'+(m.id===cur)+'" data-id="'+m.id+'"><span class="row-top"><span class="row-name">'+m.n+'</span>'+m.t.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</span><span class="row-meta"><span class="mono">'+m.q+'</span><span><b>'+m.d+'</b> download</span><span>needs '+m.mem+' memory</span><span>'+m.s+' <span class="mono">~'+m.tps.toFixed(1)+' tok/s</span></span></span></button>'}).join('');
+ }
+ $('list').addEventListener('click',function(e){var r=e.target.closest('.row');if(!r)return;picked=r.dataset.id;renderList();var l=$('loadBtn');l.href='app-download.html?model='+picked;l.removeAttribute('aria-disabled');l.removeAttribute('tabindex');l.removeAttribute('style');l.removeAttribute('role');var nr=document.querySelector('.row[data-id="'+picked+'"]');if(nr)nr.focus()});
+ render();
+})();
+</script>
+
+
+</body></html>
